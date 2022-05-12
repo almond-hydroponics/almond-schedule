@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package role;
+
+import "commons.proto";
+
+message Role {
+  string id = 1;
+  string roleName = 2;
+  string roleDescription = 3;
+  bool deleted = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+  int32 version = 7;
+}
+
+message RoleEdge {
+  Role node = 1;
+  string cursor = 2;
+}
+
+message CreateRoleInput {
+  string roleName = 1;
+  string roleDescription = 2;
+}
+
+message UpdateRoleInput {
+  string id = 1;
+  Role data = 2;
+}
+
+message FindRolePayload {
+  repeated RoleEdge edges = 1;
+  commons.PageInfo pageInfo = 2;
+  int32 totalCount = 3;
+}
+
+service RoleService {
+  rpc find (commons.Query) returns (FindRolePayload) {}
+  rpc findById (commons.Id) returns (Role) {}
+  rpc findOne (commons.Query) returns (Role) {}
+  rpc count (commons.Query) returns (commons.Count) {}
+  rpc create (CreateRoleInput) returns (Role) {}
+  rpc update (UpdateRoleInput) returns (Role) {}
+  rpc destroy (commons.Query) returns (commons.Count) {}
+}

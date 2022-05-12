@@ -1,8 +1,30 @@
+import { join } from 'path';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { INestMicroservice, LoggerService } from '@nestjs/common';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { Logger } from 'nestjs-pino';
+import { ExceptionFilter } from './_helpers';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-}
-bootstrap();
+(async function main() {
+	const app: INestMicroservice =
+		await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
+			transport: Transport.GRPC,
+			options: {
+				url: `${process.env.GRPC_HOST}:${process.env.GRPC_PORT}`,
+				package: 'schedule',
+				protoPath: join(__dirname, './_proto/schedule.proto'),
+				loader: {
+					keepCase: true,
+					enums: String,
+					oneofs: true,
+					arrays: true,
+				},
+			},
+		});
+
+	app.useGlobalFilters(new ExceptionFilter());
+	app.useLogger(app.get<Logger, LoggerService>(Logger));
+
+	return app.listen();
+})();

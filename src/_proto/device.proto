@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package device;
+
+import "commons.proto";
+
+message Device {
+  string id = 1;
+  string name = 2;
+  string user = 3;
+  bool verified = 4;
+  bool active = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+  int32 version = 8;
+}
+
+message DeviceEdge {
+  Device node = 1;
+  string cursor = 2;
+}
+
+message CreateDeviceInput {
+  string name = 1;
+}
+
+message UpdateDeviceInput {
+  string id = 1;
+  Device data = 2;
+}
+
+message FindDevicesPayload {
+  repeated DeviceEdge edges = 1;
+  commons.PageInfo pageInfo = 2;
+  int32 totalCount = 3;
+}
+
+service DevicesService {
+  rpc find (commons.Query) returns (FindDevicesPayload) {}
+  rpc findById (commons.Id) returns (Device) {}
+  rpc findOne (commons.Query) returns (Device) {}
+  rpc count (commons.Query) returns (commons.Count) {}
+  rpc create (CreateDeviceInput) returns (Device) {}
+  rpc update (UpdateDeviceInput) returns (Device) {}
+  rpc destroy (commons.Query) returns (commons.Count) {}
+}
