@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { LoggerModule } from 'nestjs-pino';
+
 import { DatabaseModule } from './database/database.module';
 import { SchedulesModule } from './schedules/schedules.module';
-import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
 	imports: [

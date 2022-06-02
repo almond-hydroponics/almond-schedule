@@ -1,10 +1,10 @@
 import { Provider } from '@nestjs/common';
+import { PinoLogger } from 'nestjs-pino';
 import { Sequelize } from 'sequelize-typescript';
 
-import { PinoLogger } from 'nestjs-pino';
 import { Schedule } from '../schedules/schedule.model';
-import { DEVELOPMENT, PRODUCTION, TEST } from './database.constants';
 import { databaseConfig } from './database.config';
+import { DEVELOPMENT, PRODUCTION, TEST } from './database.constants';
 
 export const DatabaseProvider: Provider[] = [
 	{

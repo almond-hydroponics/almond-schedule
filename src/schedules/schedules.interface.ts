@@ -1,11 +1,11 @@
 import { FindOptions } from 'sequelize/types';
 
-import { Schedule } from './schedule.model';
-import { ScheduleDto } from './schedule.dto';
 import {
 	IFindAndPaginateOptions,
 	IFindAndPaginateResult,
 } from '../commons/find-and-paginate.interface';
+import { ScheduleDto } from './schedule.dto';
+import { Schedule } from './schedule.model';
 
 export interface ISchedulesService {
 	find(

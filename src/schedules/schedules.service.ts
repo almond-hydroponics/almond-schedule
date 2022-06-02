@@ -1,17 +1,16 @@
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { isEmpty } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { FindOptions } from 'sequelize/types';
-import { RpcException } from '@nestjs/microservices';
 
-import { ISchedulesService } from './schedules.interface';
 import {
 	IFindAndPaginateOptions,
 	IFindAndPaginateResult,
 } from '../commons/find-and-paginate.interface';
-
-import { Schedule } from './schedule.model';
 import { ScheduleDto } from './schedule.dto';
+import { Schedule } from './schedule.model';
+import { ISchedulesService } from './schedules.interface';
 
 @Injectable()
 export class SchedulesService implements ISchedulesService {
